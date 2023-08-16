@@ -1,0 +1,2 @@
+[console_scripts]
+hello-app = your_module:main

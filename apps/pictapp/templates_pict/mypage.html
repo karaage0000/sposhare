@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Mypage{% endblock %}
+
+{% block contents %}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <h2>投稿記事の削除</h2>
+                <p>
+                    削除する記事の[削除]をクリックしてください。
+                </p>
+                <!--pictappのトップページのリンク-->
+                <a href="{{url_for('pictapp.index')}}">プレイリスト一覧へ戻る</a>
+                <br><br>
+
+                <table>
+                    <tr>
+                        <th>削除　</th>
+                        <th>タイトル　</th>
+                        <th>投稿日時　</th>
+                    </tr>
+                    {% for entry in mylist %}
+                    <tr>
+                        <td>
+                            <a href="{{url_for('pictapp.delete', id=entry.id)}}">削除</a>
+                        </td>
+                        <td>{{ entry.title }}</td>
+                        <td>{{ entry.create_at}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
