@@ -1,1 +1,0 @@
-import apps.pictapp.models
