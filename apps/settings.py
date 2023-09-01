@@ -1,11 +1,12 @@
 import os
 
 # モジュールの親ディレクトリのフルパスを取得
-basedir = os.path.dirname(os.path.dirname(__file__))
+#basedir = os.path.dirname(os.path.dirname(__file__))
 # 親ディレクトリのpict.sqliteをデータベースに設定
+#SQLite3でのURI
 #SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(
 #                              basedir, 'app.sqlite')
-
+#MySQLでのデータベース
 #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:pass@localhost/our_users'
 
 #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://kara:9Lakkdplz2z@@@localhost/database_name'

@@ -74,16 +74,6 @@ class User(db.Model, UserMixin):
             email=self.email).first() is not None
 
     def verify_password(self, password):
-        """パスワードの照合を行う
-
-        indexビューでログインチェックする際に呼ばれる
-
-        Args:
-            password (str): ログイン画面で入力されたパスワード
-
-        Returns:
-            bool: パスワードが一致した場合はTrueを返す
-        """
         # パラメーターpasswordの値をハッシュ化して
         # 現在のインスタンスのpassword_hashと照合した結果を返す
         return check_password_hash(self.password_hash, password)
