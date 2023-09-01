@@ -18,17 +18,17 @@ class UserPicture(db.Model):
     
     # user_idはusersテーブルのidカラムを外部キーとして設定
     user_id = db.Column(
-        db.String,          # String型
+        db.Integer,          
         db.ForeignKey('users.id'))
     
     # ユーザー名用のフィールド
     username = db.Column(
-        db.String,         # String型
+        db.String(30),         # String型
         index=True)        # インデックス
 
     # タイトル用のフィールド
     title = db.Column(
-        db.String)          # String型
+        db.String(50))          # String型
     
     # 本文用のフィールド
     contents = db.Column(

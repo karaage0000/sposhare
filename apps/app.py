@@ -1,20 +1,21 @@
 """
 初期化処理
 """
+import os
 from flask import Flask
 
 # Flaskのインスタンスを生成
 app = Flask(__name__)
 # 設定ファイルを読み込む
-app.config.from_pyfile('settings.py')
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:pass@localhost/our_users'
+app.config['SECRET_KEY'] = os.urandom(10)
 
 """SQLAlchemyの登録
 """
 # SQLAlchemyのインスタンスを生成
 from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
-# SQLAlchemyオブジェクトにFlaskオブジェクトを登録する
-db.init_app(app)
+db = SQLAlchemy(app)# SQLAlchemyオブジェクトにFlaskオブジェクトを登録する
+#db.init_app(app)
 
 """Migrateの登録
 """

@@ -28,14 +28,14 @@ class User(db.Model, UserMixin):
     
     # メールアドレス用のフィールド
     email = db.Column(
-        db.String,         # String型
+        db.String(40),         # String型
         index=True,        # インデックス
         unique=True,       # ユニークキー
         nullable=False)    # 登録を必須にする
     
     # パスワード用のフィールド
     password_hash = db.Column(
-        db.String,         # String型
+        db.String(500),         # String型
         nullable=False)    # 登録を必須にする
     
     # 投稿日のフィールド
