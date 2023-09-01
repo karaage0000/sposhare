@@ -7,7 +7,7 @@ from flask import Flask
 # Flaskのインスタンスを生成
 app = Flask(__name__)
 # 設定ファイルを読み込む
-app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:pass@localhost/our_users'
+app.config['SQLALCHEMY_DATABASE_URI']=os.environ['mysql://b77d1569d085c8:4a1a8a85@us-cdbr-east-06.cleardb.net/heroku_ba4c1cfdb1ee059?reconnect=true']
 app.config['SECRET_KEY'] = os.urandom(10)
 
 """SQLAlchemyの登録
