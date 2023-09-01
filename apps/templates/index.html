@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- 言語をjaに変更 -->
+
 <html lang="ja">
 
 <head>
@@ -7,30 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <!-- ページタイトルを変更 -->
+
     <title>Start Share Spotify Playlist</title>
-    <!-- Favicon-->
-    <!-- アイコンのリンク先を設定 -->
+
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico')}}" />
-    <!-- Bootstrap Icons-->
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Google fonts-->
+
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
         rel="stylesheet" type="text/css" />
-    <!-- SimpleLightbox plugin CSS-->
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <!-- CSSのリンク先を設定-->
+
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
 </head>
 
 <body id="page-top">
-    <!-- Navigation-->
-    <!-- ナビゲーションメニュー -->
+
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <!-- 上部左側のアンカーテキストを変更 -->
+
             <a class="navbar-brand" href="#page-top">Start Share Playlist</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
@@ -176,34 +173,33 @@
                     {% for message in get_flashed_messages() %}
                     <p style="color:red">{{ message }}</p>
                     {% endfor %}
-                    <!-- CSRF対策機能を有効にする -->
                     {{form.csrf_token}}
                     <p>
-                        <!-- usernameに設定されているラベルを表示 -->
+                        
                         {{form.username.label}}
-                        <!-- usernameの入力欄を配置 -->
+                        
                         {{form.username(placeholder="ユーザー名")}}
-                        <!-- バリデーションにおけるエラーメッセージを出力-->
+                        
                         {% for error in form.username.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
                     </p>
                     <p>
-                        <!-- emailに設定されているラベルを表示 -->
+                        
                         {{form.email.label}}
-                        <!-- emailの入力欄を配置 -->
+                        
                         {{form.email(placeholder="メールアドレス")}}
-                        <!-- バリデーションにおけるエラーメッセージを出力-->
+                        
                         {% for error in form.email.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
                     </p>
                     <p>
-                        <!-- passwordに設定されているラベルを表示 -->
+                        
                         {{form.password.label}}
-                        <!-- passwordの入力欄を配置 -->
+                        
                         {{form.password(placeholder="パスワード")}}
-                        <!-- バリデーションにおけるエラーメッセージを出力-->
+                        
                         {% for error in form.password.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
@@ -218,7 +214,6 @@
     </div>
 </section>
     <!-- Footer-->
-    <!-- フッターのテキスト書き換え -->
     <footer class="bg-light py-5">
         <div class="container px-4 px-lg-5">
             <div class="small text-center text-muted">

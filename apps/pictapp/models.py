@@ -3,43 +3,20 @@ from datetime import datetime
 from apps.app import db
 
 class UserPicture(db.Model):
-    """picturesテーブルのモデルクラス
-    db.Modelを継承
-
-    """
-    # テーブル名を「pictures」にする
     __tablename__ = "pictures"
     
-    # 連番を振るフィールド、プライマリーキー
-    id = db.Column(
-		db.Integer,         # Integer型
-        primary_key=True,   # プライマリーキーに設定
-        autoincrement=True) # 自動連番を振る
-    
-    # user_idはusersテーブルのidカラムを外部キーとして設定
-    user_id = db.Column(
-        db.Integer,          
-        db.ForeignKey('users.id'))
-    
-    # ユーザー名用のフィールド
-    username = db.Column(
-        db.String(30),         # String型
-        index=True)        # インデックス
 
-    # タイトル用のフィールド
-    title = db.Column(
-        db.String(50))          # String型
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True) 
     
-    # 本文用のフィールド
-    contents = db.Column(
-        db.Text)            # Text型
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+
+    username = db.Column(db.String(30),index=True) 
+
+    title = db.Column(db.String(50))          
     
-    url = db.Column(
-        db.Text
-    )
+    contents = db.Column(db.Text)           
     
-    # 作成日時のフィールド
-    create_at = db.Column(
-        db.DateTime,          # DatTime型
-        default=datetime.now) # アップロード時の日時を取得
+    url = db.Column(db.Text)
+    
+    create_at = db.Column(db.DateTime,default=datetime.now) 
     
