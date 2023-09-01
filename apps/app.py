@@ -7,14 +7,20 @@ from flask import Flask
 # Flaskのインスタンスを生成
 app = Flask(__name__)
 # 設定ファイルを読み込む
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['CLEARDB_DATABASE_URL']
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['CLEARDB_DATABASE_URL']
 #app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:pass@localhost/our_users'
-app.config['SECRET_KEY'] = os.urandom(10)
+
 
 """SQLAlchemyの登録
 """
 # SQLAlchemyのインスタンスを生成
 from flask_sqlalchemy import SQLAlchemy
+# Herokuの環境変数からCLEARDB_DATABASE_URLを取得
+db_url = os.environ.get('CLEARDB_DATABASE_URL')
+
+# Flaskアプリケーションにデータベース接続情報を設定
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+app.config['SECRET_KEY'] = os.urandom(10)
 db = SQLAlchemy(app)# SQLAlchemyオブジェクトにFlaskオブジェクトを登録する
 #db.init_app(app)
 
