@@ -5,9 +5,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://b77d1569d085c8:4a1a8a85@us-cdbr-east-06.cleardb.net/heroku_ba4c1cfdb1ee059' #?reconnect=true
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://b77d1569d085c8:4a1a8a85@us-cdbr-east-06.cleardb.net/heroku_ba4c1cfdb1ee059' #?reconnect=true
 #app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:pass@localhost/our_users'
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://phqt7452addr9x6f:svfeeo43etzu20i2@z3iruaadbwo0iyfp.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/dt0s92wjtnoovwf5'
 
 app.config['SECRET_KEY'] = os.urandom(10)
 db = SQLAlchemy(app)

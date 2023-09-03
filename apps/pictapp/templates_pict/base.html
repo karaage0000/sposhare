@@ -69,12 +69,12 @@
             <ul class="list-unstyled">
               <!-- uploadビューへのリンクを設定 -->
               <li><a href="{{ url_for('pictapp.upload') }}"
-                      class="text-white">投稿する</a></li>
+                      class="text-white" target="_blank" rel="noopener noreferrer">投稿する</a></li>
               <li><a href="{{url_for('pictapp.mypage', user_id=current_user.id)}}"
-                      class="text-white">マイページ</a></li>
+                      class="text-white" target="_blank" rel="noopener noreferrer">マイページ</a></li>
               <!-- ログアウトの処理はlogoutビューで行う -->
               <li><a href="{{url_for('pictapp.logout')}}"
-                      class="text-white">ログアウト</a></li>
+                      class="text-white" target="_blank" rel="noopener noreferrer">ログアウト</a></li>
             </ul>
           </div>
         </div>
