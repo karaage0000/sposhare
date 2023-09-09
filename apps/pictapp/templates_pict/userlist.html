@@ -1,34 +1,17 @@
-<!-- ベーステンプレートを適用する-->
 {% extends 'base.html' %}
 
-<!-- ヘッダー情報のページタイトルは
-    ベーステンプレートを利用するページで設定する -->
 {% block title %}Picture Gallery{% endblock %}
 
-<!-- メインコンテンツを設定する<div>～</div>をテンプレートタグで囲む-->
 {% block contents %}
-<!-- メインコンテンツ -->
   <div class="album py-5 bg-light">
-    <!-- Bootstrapのグリッドシステム -->
     <div class="container">
-      <!-- 行要素を配置 -->
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <!-- レコードが格納されたuser_pictsから1件ずつ取り出す -->
         {% for picture in userlist %}
-        <!-- 画像のサムネイルを表示するブロック -->
-        <!-- 列要素を配置 -->
         <div class="col">          
           <div class="card shadow-sm">
-            <!-- サムネイルの表示部 -->
-            <!-- svgタグをimgタグに変更 -->
-            <!-- picture.image_pathを引数にしてpictapp.image_fileを呼び出して
-            imagesフォルダー内の画像ファイルのパスを取得-->
               <title>Placeholder</title>
               <rect width="100%" height="100%" fill="#55595c"/>
-              <!-- <text>~</text>を削除 -->
-            <!-- サムネイル下の表示ブロック -->
             <div class="card-body">
-              <!-- 投稿画像のタイトルを出力 -->
               <p class="card-text">{{picture.title}}</p>
               {% if picture.url %}
               {% set playlist_id = picture.url.split('/')[-1] %}
@@ -39,28 +22,19 @@
                   <a href="{{url_for('pictapp.show_detail', id=picture.id)}}">
                   <button type="button"
                           class="btn btn-sm btn-outline-secondary">詳細</button></a>
-
                   <a href="{{url_for('pictapp.user_list', user_id=picture.user_id)}}">
-                  <!-- ボタンのテキストを投稿したユーザー名にする -->
                   <button type="button"
                           class="btn btn-sm btn-outline-secondary">
                           {{picture.username}}</button></a>
                 </div>
-                <!-- 投稿したユーザー名を表示 -->
                 <a href="{{url_for('pictapp.user_list', user_id=picture.user_id)}}">
                 <small class="text-muted">{{picture.username}}</small></a>
               </div>
             </div>
           </div>
-          <!-- 列要素以下のタグまで -->
         </div>
         {% endfor %}
-        <!-- 行要素以下のタグまで -->
       </div>
-
-      <!-- Pager-->
-    <!-- グリッドシステム以下のタグまで -->
     </div>
   </div>
-<!-- メインコンテンツを設定する<div>～</div>をテンプレートタグで囲む-->
 {% endblock %}

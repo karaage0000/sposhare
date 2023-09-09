@@ -7,49 +7,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-
     <title>Start Share Spotify Playlist</title>
-
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/favicon.ico')}}" />
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
         rel="stylesheet" type="text/css" />
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
 </head>
 
 <body id="page-top">
-
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container px-4 px-lg-5">
-
             <a class="navbar-brand" href="#page-top">Start Share Playlist</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- ナビゲーションメニュー -->
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <!-- 第2画面へのリンク -->
                     <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
-                    <!-- サンプル画面へのリンク -->
                     <li class="nav-item">
                         <a class="nav-link" href="#services">Services</a>
                     </li>
-                    <!-- ログイン画面へのリンク テキストとhref属性変更 -->
                     <li class="nav-item">
                         <a class="nav-link" href="#login">Login</a>
                     </li>
-                    <!-- サインアップ画面へのリンク テキストとhref属性変更 -->
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Sign-up</a>
                     </li>
@@ -57,53 +44,40 @@
             </div>
         </div>
     </nav>
-    <!-- 第1画面: ヘッダー -->
-    <!-- Masthead-->
     <header class="masthead">
         <div class="container px-4 px-lg-5 h-100">
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-8 align-self-end">
-                    <!-- 大見出しのテキストを編集 -->
                     <h1 class="text-white font-weight-bold">
                         Let's Share Your Favorite Playlist</h1>
                     <hr class="divider" />
                 </div>
                 <div class="col-lg-8 align-self-baseline">
-                    <!-- 大見出し以下の文章を編集 -->
                     <p class="text-white-75 mb-5">
                         自分のお気に入りのプレイリストをみんなに共有しよう!
                     </p>
-                    <!-- 進むボタン 第2画面へ -->
                     <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
                 </div>
             </div>
         </div>
     </header>
-    <!-- 第2画面 -->
-    <!-- About-->
     <section class="page-section bg-primary" id="about">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <!-- タイトルテキストを編集 -->
                     <h2 class="text-white mt-0">Here is login screen!</h2>
                     <hr class="divider divider-light" />
-                    <!-- タイトル下の文章を編集 -->
                     <p class="text-white-75 mb-4">
                         ユーザー登録はお済みですか?
                     </p>
-                    <!-- サンプル画面へ進むボタン -->
                     <a class="btn btn-light btn-xl" href="#services">
                         Get Started!</a>
                 </div>
             </div>
         </div>
     </section>
-    <!-- 第3画面 -->
-    <!-- Services-->
     <section class="page-section" id="services">
         <div class="container px-4 px-lg-5">
-            <!-- タイトル変更 -->
             <h2 class="text-center mt-0">このアプリの流れ</h2>
             <hr class="divider" />
             <div class="row gx-4 gx-lg-5">
@@ -138,20 +112,13 @@
             </div>
         </div>
     </section>
-    <!-- 第5画面 -->
-    <!-- Call to action-->
-    <!-- id="login"を追加 -->
     <section class="page-section bg-dark text-white" id="login">
         <div class="container px-4 px-lg-5 text-center">
-            <!-- タイトルのテキスト -->
             <h2 class="mb-4">Login here!</h2>
-            <!-- Login Now!ボタンのリンク先を変更 -->
             <a class="btn btn-light btn-xl"
                 href="{{url_for('authapp.index')}}">Login Now!</a>
         </div>
     </section>
-<!-- 第6画面: フォーム -->
-<!-- Contact-->
 <section class="page-section" id="contact">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -163,49 +130,35 @@
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
             <div class="col-lg-6">
-                <!--フォームを配置
-                    バリデーションはflask_wtfで行うので
-                    novalidateを設定してHTMLのバリデーションを無効にする-->
                 <form action="{{url_for('index')}}"
                         method="POST"
                         novalidate="novalidate">
-                    <!-- フラッシュメッセージを出力 -->
                     {% for message in get_flashed_messages() %}
                     <p style="color:red">{{ message }}</p>
                     {% endfor %}
                     {{form.csrf_token}}
                     <p>
-                        
                         {{form.username.label}}
-                        
                         {{form.username(placeholder="ユーザー名")}}
-                        
                         {% for error in form.username.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
                     </p>
                     <p>
-                        
                         {{form.email.label}}
-                        
                         {{form.email(placeholder="メールアドレス")}}
-                        
                         {% for error in form.email.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
                     </p>
                     <p>
-                        
                         {{form.password.label}}
-                        
                         {{form.password(placeholder="パスワード")}}
-                        
                         {% for error in form.password.errors %}
                         <span style="color:red">{{ error }}</span>
                         {% endfor %}
                     </p>
                     <p>
-                        <!-- 送信ボタンを配置 -->
                         {{form.submit()}}
                     </p>
                 </form>
@@ -213,7 +166,6 @@
         </div>
     </div>
 </section>
-    <!-- Footer-->
     <footer class="bg-light py-5">
         <div class="container px-4 px-lg-5">
             <div class="small text-center text-muted">
@@ -221,17 +173,9 @@
             </div>
         </div>
     </footer>
-    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SimpleLightbox plugin JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-    <!-- Core theme JS-->
-    <!-- サンプルのJSのリンク先をを設定-->
     <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 

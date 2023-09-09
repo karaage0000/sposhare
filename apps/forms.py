@@ -15,5 +15,4 @@ class SignupForm(FlaskForm):
         "パスワード",
         validators=[DataRequired(message="入力が必要です。"),length(min=6, message="6文字以上で入力してください。"),]
     )
-    # フォームのsubmitボタン
     submit = SubmitField("新規登録")

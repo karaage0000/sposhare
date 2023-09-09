@@ -1,22 +1,14 @@
 from datetime import datetime
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from flask_login import UserMixin
-
 from apps.app import db, login_manager
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
-    
     id = db.Column(db.Integer,primary_key=True,autoincrement=True) 
-    
     username = db.Column(db.String(30),index=True,nullable=False)
-
     email = db.Column(db.String(40),index=True,unique=True,nullable=False)
-
     password_hash = db.Column(db.String(500),nullable=False)
-
     create_at = db.Column(db.DateTime,default=datetime.now)
     
     @property
@@ -26,15 +18,11 @@ class User(db.Model, UserMixin):
     
     @password.setter
     def password(self, password):
-
         self.password_hash = generate_password_hash(password)
-    
     def is_duplicate_email(self):
         return User.query.filter_by(
             email=self.email).first() is not None
-
     def verify_password(self, password):
-
         return check_password_hash(self.password_hash, password)
 
 

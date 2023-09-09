@@ -1,10 +1,5 @@
 from flask import Blueprint
 
-""" 識別名をauthappにしてBlueprintオブジェクトを生成
-
-    テンプレートフォルダーは'templates_auth'
-    staticフォルダーは'static_auth'
-"""
 authapp = Blueprint(
     'authapp',
     __name__,
@@ -12,10 +7,6 @@ authapp = Blueprint(
     static_folder='static_auth',
     )
 
-"""authappのログインページのルーティングとビューの定義
-
-    ユーザー認証を行う
-"""
 from flask import render_template, url_for, redirect, flash
 from flask_login import login_user
 from sqlalchemy import select

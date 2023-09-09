@@ -1,9 +1,9 @@
-
-""" 識別名をpictappにしてBlueprintオブジェクトを生成
-    ・テンプレートフォルダーは同じディレクトリの'templates_pict'
-    ・staticフォルダーは同じディレクトリの'static_pict'
-"""
-from flask import Blueprint, request
+from flask import Blueprint, request,render_template, url_for, redirect
+from flask_login import login_required,logout_user
+from sqlalchemy import select 
+from flask import request 
+from flask_paginate import Pagination, get_page_parameter
+from flask import send_from_directory # send_from_directory
 
 pictapp = Blueprint(
     'pictapp',
@@ -12,47 +12,22 @@ pictapp = Blueprint(
     static_folder='static_pict',
     )
 
-"""pictappのトップページのルーティングとビューの定義
-"""
-from flask import render_template
-from flask_login import login_required 
-from sqlalchemy import select 
-from flask import request 
-from flask_paginate import Pagination, get_page_parameter
-
-# ログイン必須にする
 @pictapp.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-
     stmt = select(
         modelpict.UserPicture).order_by(modelpict.UserPicture.create_at.desc())
-
     entries = db.session.execute(stmt).scalars().all()
-
-
     page = request.args.get(
         get_page_parameter(), type=int, default=1)
-
     res = entries[(page - 1)*6: page*6]
-
     pagination = Pagination(page=page,total=len(entries), per_page=6)
-
     return render_template('top.html', user_picts=res, pagination=pagination)
-
-
-from flask import send_from_directory # send_from_directory
-
-
-from flask_login import logout_user
-from flask import render_template, url_for, redirect
 
 @pictapp.route('/logout')
 @login_required
 def logout():
-
     logout_user()
-
     return redirect(url_for('authapp.index'))
 
 
@@ -68,48 +43,32 @@ from apps.pictapp import models as modelpict
 @pictapp.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    
     form = forms.UploadImageForm()
-    
     if form.validate_on_submit():
-        
         upload_data = modelpict.UserPicture(
-            
             user_id=current_user.id,
-            
             username = current_user.username,
-            
             title=form.title.data,
-            
             contents=form.message.data,
-            
             url=form.url.data,
         )
         
         db.session.add(upload_data)
-        
         db.session.commit()
-        
         return redirect(url_for('pictapp.index'))
     
     return render_template('upload.html', form=form)
 
-"""詳細ページ
-"""
 @pictapp.route('/detail/<int:id>')
 @login_required
 def show_detail(id):
     detail = db.session.get(modelpict.UserPicture, id)
     playlist_url = None
-
     if request.method == 'POST':
         playlist_url = request.detail.url
         if playlist_url:
             playlist_id = playlist_url.split('/')[-1]
             playlist_url = f"https://open.spotify.com/embed/playlist/{playlist_id}"
-
-    
-
     return render_template('detail.html', detail=detail)
 
 @pictapp.route('/user-list/<int:user_id>')
@@ -118,9 +77,7 @@ def user_list(user_id):
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
             modelpict.UserPicture.create_at.desc())
-    
     userlist = db.session.execute(stmt).scalars().all()
-
     return render_template('userlist.html', userlist=userlist)
 
 
@@ -130,10 +87,7 @@ def mypage(user_id):
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
             modelpict.UserPicture.create_at.desc())
-    
     mylist = db.session.execute(stmt).scalars().all()
-
-
     return render_template('mypage.html', mylist=mylist)
 
 
@@ -149,9 +103,7 @@ def delete(id):
 @pictapp.route('/playlist', methods=['GET', 'POST'])
 def show_embedded_playlist():
     form = forms.UploadImageForm()
-
-    playlist_url = None  
-
+    playlist_url = None
     if form.validate_on_submit():
         url = form.url.data
         playlist_id = url.split('/')[-1]

@@ -23,16 +23,12 @@ class UploadImageForm(FlaskForm):
         "タイトル",
         validators=[DataRequired(message="入力が必要です。"),length(max=200, message="200文字以内で入力してください。"),]
     )
-
     message = TextAreaField(
         "メッセージ",
         validators=[DataRequired(message="入力が必要です。"),])
-    
     url = StringField(
         "URL",
         validators=[DataRequired(message="プレイリストのURLを記入してください。"),])
-    
-    
     submit = SubmitField('投稿する')
 
 
