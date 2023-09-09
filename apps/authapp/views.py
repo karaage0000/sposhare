@@ -7,7 +7,7 @@ authapp = Blueprint(
     static_folder='static_auth',
     )
 
-from flask import render_template, url_for, redirect, flash
+from flask import render_template, url_for, redirect, flash, session
 from flask_login import login_user
 from sqlalchemy import select
 from apps.authapp import forms 
@@ -16,20 +16,15 @@ from apps.app import db
 
 @authapp.route('/', methods=['GET', 'POST'])
 def index():
-    
+    session['logged_in'] = False
     form = forms.LoginForm()
-    
     if form.validate_on_submit():
-
         stmt = (
             select(models.User).filter_by(email=form.email.data).limit(1))
-        
         user = db.session.execute(stmt).scalars().first()
-
         if user is not None and user.verify_password(form.password.data):
-
+            session['logged_in'] = True
             login_user(user)
-
             return redirect(url_for('pictapp.index'))
 
         flash("認証に失敗しました")

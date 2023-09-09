@@ -53,11 +53,11 @@
             {% endif %}
             <ul class="list-unstyled">
               <li><a href="{{ url_for('pictapp.upload') }}"
-                      class="text-white" target="_blank" rel="noopener noreferrer">投稿する</a></li>
+                      class="text-white" rel="noopener noreferrer">投稿する</a></li>
               <li><a href="{{url_for('pictapp.mypage', user_id=current_user.id)}}"
-                      class="text-white" target="_blank" rel="noopener noreferrer">マイページ</a></li>
+                      class="text-white" rel="noopener noreferrer">マイページ</a></li>
               <li><a href="{{url_for('pictapp.logout')}}"
-                      class="text-white" target="_blank" rel="noopener noreferrer">ログアウト</a></li>
+                      class="text-white" rel="noopener noreferrer">ログアウト</a></li>
             </ul>
           </div>
         </div>

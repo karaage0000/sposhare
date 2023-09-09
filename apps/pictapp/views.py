@@ -1,4 +1,4 @@
-from flask import Blueprint, request,render_template, url_for, redirect
+from flask import Blueprint, request,render_template, url_for, redirect, session
 from flask_login import login_required,logout_user
 from sqlalchemy import select 
 from flask import request 
@@ -13,7 +13,6 @@ pictapp = Blueprint(
     )
 
 @pictapp.route('/', methods=['GET', 'POST'])
-@login_required
 def index():
     stmt = select(
         modelpict.UserPicture).order_by(modelpict.UserPicture.create_at.desc())
@@ -25,8 +24,8 @@ def index():
     return render_template('top.html', user_picts=res, pagination=pagination)
 
 @pictapp.route('/logout')
-@login_required
 def logout():
+    session['logged_in'] = False
     logout_user()
     return redirect(url_for('authapp.index'))
 
@@ -41,7 +40,6 @@ from apps.pictapp import forms
 from apps.pictapp import models as modelpict
 
 @pictapp.route('/upload', methods=['GET', 'POST'])
-@login_required
 def upload():
     form = forms.UploadImageForm()
     if form.validate_on_submit():
@@ -60,7 +58,6 @@ def upload():
     return render_template('upload.html', form=form)
 
 @pictapp.route('/detail/<int:id>')
-@login_required
 def show_detail(id):
     detail = db.session.get(modelpict.UserPicture, id)
     playlist_url = None
@@ -72,7 +69,6 @@ def show_detail(id):
     return render_template('detail.html', detail=detail)
 
 @pictapp.route('/user-list/<int:user_id>')
-@login_required
 def user_list(user_id):
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
@@ -82,7 +78,6 @@ def user_list(user_id):
 
 
 @pictapp.route('/mypage/<int:user_id>')
-@login_required
 def mypage(user_id):
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
@@ -92,7 +87,6 @@ def mypage(user_id):
 
 
 @pictapp.route('/delete/<int:id>')
-@login_required
 def delete(id):
     entry = db.session.get(modelpict.UserPicture, id)
     db.session.delete(entry)
