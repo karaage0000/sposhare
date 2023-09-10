@@ -11,5 +11,4 @@ class LoginForm(FlaskForm):
         "パスワード",
         validators=[DataRequired(message="パスワードの入力が必要です。"),]
     )
-
     submit = SubmitField(("ログイン"))
