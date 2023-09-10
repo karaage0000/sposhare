@@ -1,9 +1,9 @@
-from flask import Blueprint, request,render_template, url_for, redirect
+from flask import Blueprint, request,render_template, url_for, redirect,flash
 from flask_login import login_required,logout_user
-from sqlalchemy import select 
-from flask import request 
-from flask_paginate import Pagination, get_page_parameter
-from flask import send_from_directory # send_from_directory
+from sqlalchemy import select,desc
+from flask import request
+from apps.app import Session
+from apps.pictapp.models import UserPicture
 
 pictapp = Blueprint(
     'pictapp',
@@ -15,14 +15,20 @@ pictapp = Blueprint(
 @pictapp.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    stmt = select(
-        modelpict.UserPicture).order_by(modelpict.UserPicture.create_at.desc())
-    entries = db.session.execute(stmt).scalars().all()
-    page = request.args.get(
-        get_page_parameter(), type=int, default=1)
-    res = entries[(page - 1)*6: page*6]
-    pagination = Pagination(page=page,total=len(entries), per_page=6)
-    return render_template('top.html', user_picts=res, pagination=pagination)
+    session = Session()
+    page = request.args.get('page', type=int, default=1)
+    per_page = 6
+    user_picts = (
+        session.query(UserPicture)
+        .filter_by(user_id=current_user.id)
+        .order_by(desc(UserPicture.create_at))
+        .limit(per_page)
+        .offset((page - 1) * per_page)
+        .all()
+    )
+    session.close()
+    return render_template('top.html', user_picts=user_picts, pagination=None)  # pagination=None を追加
+
 
 @pictapp.route('/logout')
 @login_required
@@ -35,8 +41,7 @@ import uuid
 from pathlib import Path 
 from flask_login import current_user 
 from flask import current_app 
-
-from apps.app import db 
+from apps.app import migrate
 from apps.pictapp import forms 
 from apps.pictapp import models as modelpict
 
@@ -45,24 +50,30 @@ from apps.pictapp import models as modelpict
 def upload():
     form = forms.UploadImageForm()
     if form.validate_on_submit():
-        upload_data = modelpict.UserPicture(
-            user_id=current_user.id,
-            username = current_user.username,
-            title=form.title.data,
-            contents=form.message.data,
-            url=form.url.data,
-        )
-        
-        db.session.add(upload_data)
-        db.session.commit()
+        try:
+            session = Session()
+            upload_data = modelpict.UserPicture(
+                user_id=current_user.id,
+                username = current_user.username,
+                title=form.title.data,
+                contents=form.message.data,
+                url=form.url.data,
+            )
+        except Exception as e:
+            flash('正しく送信されませんでした。')
+            print(f"Error during login: {e}")
+        finally:
+            session.add(upload_data)
+            session.commit()
+            session.close()
         return redirect(url_for('pictapp.index'))
-    
     return render_template('upload.html', form=form)
 
 @pictapp.route('/detail/<int:id>')
 @login_required
 def show_detail(id):
-    detail = db.session.get(modelpict.UserPicture, id)
+    session = Session()
+    detail = session.get(modelpict.UserPicture, id)
     playlist_url = None
     if request.method == 'POST':
         playlist_url = request.detail.url
@@ -74,29 +85,34 @@ def show_detail(id):
 @pictapp.route('/user-list/<int:user_id>')
 @login_required
 def user_list(user_id):
+    session = Session()
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
             modelpict.UserPicture.create_at.desc())
-    userlist = db.session.execute(stmt).scalars().all()
+    userlist = session.execute(stmt).scalars().all()
     return render_template('userlist.html', userlist=userlist)
 
 
 @pictapp.route('/mypage/<int:user_id>')
 @login_required
 def mypage(user_id):
+    session = Session()
     stmt = select(
         modelpict.UserPicture).filter_by(user_id=user_id).order_by(
             modelpict.UserPicture.create_at.desc())
-    mylist = db.session.execute(stmt).scalars().all()
+    mylist = session.execute(stmt).scalars().all()
+    session.close()
     return render_template('mypage.html', mylist=mylist)
 
 
 @pictapp.route('/delete/<int:id>')
 @login_required
 def delete(id):
-    entry = db.session.get(modelpict.UserPicture, id)
-    db.session.delete(entry)
-    db.session.commit()
+    session = Session()
+    entry = session.get(modelpict.UserPicture, id)
+    session.delete(entry)
+    session.commit()
+    session.close()
     return redirect(url_for('pictapp.index'))
 
 
