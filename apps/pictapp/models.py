@@ -19,7 +19,7 @@ Base = declarative_base()
 class UserPicture(Base):
     __tablename__ = "pictures"
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer(), ForeignKey('users.id'))
     username = Column(String(30), index=True)
     title = Column(String(50))
     contents = Column(Text)
@@ -33,7 +33,6 @@ user_pictures = session.query(UserPicture).filter_by(user_id=user_id).order_by(d
 # クエリ結果の処理
 for picture in user_pictures:
     print(f"ID: {picture.id}, Title: {picture.title}, Created At: {picture.create_at}")
-
 # セッションをクローズ
 session.close()
 

@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, DateTime,create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
 
-Base = declarative_base()
+"""Base = declarative_base()
 Session = sessionmaker(bind=create_engine('mysql://phqt7452addr9x6f:svfeeo43etzu20i2@z3iruaadbwo0iyfp.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/dt0s92wjtnoovwf5')) 
 
 class User(Base, UserMixin):
@@ -29,9 +29,9 @@ class User(Base, UserMixin):
         session.close()
         return user is not None
     def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password_hash, password)"""
 
-
+"""
 from apps.app import login_manager
 @login_manager.user_loader
 def load_user(user_id):
@@ -45,6 +45,7 @@ def load_user(user_id):
         return None
     finally:
         session.close()
+"""
 
 
 
