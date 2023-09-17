@@ -49,3 +49,15 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+    // ボリューム設定
+        let elem_volume = document.getElementById("volume");
+        let elem_range = document.getElementById("vol_range");
+
+        ad.volume = elem_volume.value;  // 初期値設定
+
+        // ボリューム変更時
+        elem_volume.addEventListener("change", function(){
+        ad.volume = elem_volume.value;
+        elem_range.textContent = elem_volume.value;
+        }, false);

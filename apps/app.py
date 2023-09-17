@@ -45,3 +45,6 @@ app.register_blueprint(authapp, url_prefix='/auth')
 
 from apps.pictapp.views import pictapp
 app.register_blueprint(pictapp, url_prefix='/picture')
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8081)

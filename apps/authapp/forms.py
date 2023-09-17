@@ -4,11 +4,11 @@ from wtforms.validators import DataRequired, Email
 
 class LoginForm(FlaskForm):
     email = StringField(
-        "メールアドレス",
+        "",
         validators=[DataRequired(message="メールアドレスの入力が必要です。"),Email(message="メールアドレスの形式で入力してください。"),]
     )
     password = PasswordField(
-        "パスワード",
+        "",
         validators=[DataRequired(message="パスワードの入力が必要です。"),]
     )
 

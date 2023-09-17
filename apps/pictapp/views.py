@@ -13,9 +13,10 @@ pictapp = Blueprint(
     )
 
 @pictapp.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     stmt = select(
-        modelpict.UserPicture).order_by(modelpict.UserPicture.create_at.desc())
+        modelpict.UserPlaylist).order_by(modelpict.UserPlaylist.create_at.desc())
     entries = db.session.execute(stmt).scalars().all()
     page = request.args.get(
         get_page_parameter(), type=int, default=1)
@@ -24,6 +25,7 @@ def index():
     return render_template('top.html', user_picts=res, pagination=pagination)
 
 @pictapp.route('/logout')
+@login_required
 def logout():
     session['logged_in'] = False
     logout_user()
@@ -40,10 +42,11 @@ from apps.pictapp import forms
 from apps.pictapp import models as modelpict
 
 @pictapp.route('/upload', methods=['GET', 'POST'])
+@login_required
 def upload():
     form = forms.UploadImageForm()
     if form.validate_on_submit():
-        upload_data = modelpict.UserPicture(
+        upload_data = modelpict.UserPlaylist(
             user_id=current_user.id,
             username = current_user.username,
             title=form.title.data,
@@ -58,8 +61,9 @@ def upload():
     return render_template('upload.html', form=form)
 
 @pictapp.route('/detail/<int:id>')
+@login_required
 def show_detail(id):
-    detail = db.session.get(modelpict.UserPicture, id)
+    detail = db.session.get(modelpict.UserPlaylist, id)
     playlist_url = None
     if request.method == 'POST':
         playlist_url = request.detail.url
@@ -69,32 +73,36 @@ def show_detail(id):
     return render_template('detail.html', detail=detail)
 
 @pictapp.route('/user-list/<int:user_id>')
+@login_required
 def user_list(user_id):
     stmt = select(
-        modelpict.UserPicture).filter_by(user_id=user_id).order_by(
-            modelpict.UserPicture.create_at.desc())
+        modelpict.UserPlaylist).filter_by(user_id=user_id).order_by(
+            modelpict.UserPlaylist.create_at.desc())
     userlist = db.session.execute(stmt).scalars().all()
     return render_template('userlist.html', userlist=userlist)
 
 
 @pictapp.route('/mypage/<int:user_id>')
+@login_required
 def mypage(user_id):
     stmt = select(
-        modelpict.UserPicture).filter_by(user_id=user_id).order_by(
-            modelpict.UserPicture.create_at.desc())
+        modelpict.UserPlaylist).filter_by(user_id=user_id).order_by(
+            modelpict.UserPlaylist.create_at.desc())
     mylist = db.session.execute(stmt).scalars().all()
     return render_template('mypage.html', mylist=mylist)
 
 
 @pictapp.route('/delete/<int:id>')
+@login_required
 def delete(id):
-    entry = db.session.get(modelpict.UserPicture, id)
+    entry = db.session.get(modelpict.UserPlaylist, id)
     db.session.delete(entry)
     db.session.commit()
     return redirect(url_for('pictapp.index'))
 
 
 @pictapp.route('/playlist', methods=['GET', 'POST'])
+@login_required
 def show_embedded_playlist():
     form = forms.UploadImageForm()
     playlist_url = None

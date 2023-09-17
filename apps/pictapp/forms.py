@@ -20,16 +20,18 @@ import os
 
 class UploadImageForm(FlaskForm):
     title = StringField(
-        "タイトル",
+        "",
         validators=[DataRequired(message="入力が必要です。"),length(max=200, message="200文字以内で入力してください。"),]
     )
     message = TextAreaField(
-        "メッセージ",
+        "",render_kw={'style': 'height: 200px;' 'width:183px;' ' resize: none;'},
         validators=[DataRequired(message="入力が必要です。"),])
     url = StringField(
-        "URL",
+        "",render_kw={'style':'width:183px'},
         validators=[DataRequired(message="プレイリストのURLを記入してください。"),])
-    submit = SubmitField('投稿する')
+    submit = SubmitField(
+        '投稿する'
+        )
 
 
 
